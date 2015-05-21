@@ -1,0 +1,22 @@
+<!DOCTYPE=html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>簡単な掲示版</title>
+    </head>
+    <body>
+        <script>
+            function getJob() {
+                www = document.getElementById("word").value;
+                vvv = document.getElementById("view").innerHTML;
+                aaa = vvv + www + "<br>";
+                document.getElementById("view").innerHTML = aaa;
+                document.getElementById("word").value = "";
+                document.getElementById("word").focus();
+            }
+        </script>
+        <input type="text" value=""id="word" style="width: 400px;font-size: 110%;">
+        <input type="button" value="投稿" style="font-size: 110%;" onclick="getJob()">
+        <p id="view" style="width: 800px;height: "></p>
+    </body>
+</html>

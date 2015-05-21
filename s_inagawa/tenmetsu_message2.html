@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>１文字ずつの点滅メッセージ</title>
+    </head>
+    <body>
+        <script>
+            var tenmetsu = function(element, message, time){
+                alert(element);
+                if(!element.value){
+                    for(var l = 1 ; l <= message.length ; l++){
+                        //element.value = message.substring( 0, l) + "_";
+                        //setMessage(l);
+                        setInterval("setMessage(element, message, l)", time);
+                    }
+                }else{
+                    element.value = '';
+                }
+            }
+
+            var setMessage = function(element, message, l){
+                element.value = message.substring( 0, l) + "_";
+                //setMessage(l);
+                //console.log(l);
+            }
+        </script>
+        <form name="myForm">
+            <input type="text" name="myFormMes" style="width: 300px">
+        </form>
+        <script>
+            var message = 'いらっしゃいませ！　こんにちはー';
+            var time = length * 200;
+            tenmetsu(document.myForm.myFormMes, message, time)();
+            //setInterval("tenmetsu(document.myForm.myFormMes, message, time)", time);
+        </script>
+    </body>
+</html>
