@@ -1,0 +1,25 @@
+<!DOCTYPE=html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>移動履歴ボタン</title>
+    </head>
+    <body>
+        <script>
+            var idou = function(mode){
+                switch (mode){
+                    case "modoru": history.back(); alert("戻ったよ");break;
+                    case "koushin": location.reload(true); alert("更新したよ"); break;
+                    case "susumu": history.forward(); alert("進んだよ");break;
+                    default : location.href='http://www.google.co.jp'; alert("トップページ"); break;
+                }
+            };
+        </script>
+        <form>
+            <input type="button" value="戻る" onclick="idou('modoru')">
+            <input type="button" value="更新" onclick="idou('koushin')">
+            <input type="button" value="進む" onclick="idou('susumu')">
+            <input type="button" value="トップページへ" onclick="idou('')">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE=html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>はじめての掲示板</title>
+    </head>
+    <body>
+        <script>
+            var hoge = function(){
+                var value = document.myForm.myLine.value;
+                var info = document.getElementById('display');
+                var pNode = document.createElement('p');
+                pNode.appendChild(document.createTextNode(value));
+                info.appendChild(pNode);
+                document.myForm.myLine.value="";
+            }
+        </script>
+        <form name="myForm">
+            <input type="text" name="myLine">
+            <input type="button" value="つぶやき" onclick="hoge()">
+        </form>
+        <div id="display">
+        </div>
+    </body>
+</html>

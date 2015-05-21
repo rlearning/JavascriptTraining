@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+    <head>
+      <meta charset="utf-8">
+      <title>初めてのTODOリスト</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var inc = 0;
+            var getList = function(){
+                // 日時
+                var datetime = document.todo.datetime.value;
+                // 優先度
+                var priority = getPriority(document.todo.priority.value);
+                // 期限
+                var limit = document.todo.limit.value;
+                // 作業内容
+                var detail = document.todo.detail.value;
+                // 取得した内容を配列に格納
+                return new Array(datetime, priority, limit, detail);
+            }
+            var addList = function(){
+                //alert(datetime);
+                var list = getList();
+                // １追加する対象のDOMのエレメント取得
+                var result = document.getElementById("result");
+                // trタグ作成
+                var trNode = document.createElement("tr");
+                trNode.setAttribute("id",("tr" + result.children.length));
+                // tr要素の追加
+                result.appendChild(trNode);
+                //
+                // 入力項目数分loop
+                trNode = document.getElementById("tr" + (result.children.length - 1));
+                for(i=0;i<list.length;i++){
+                    var tdNode = document.createElement("td");
+                    var str = document.createTextNode(list[i]);
+                    tdNode.appendChild(str);
+                    trNode.appendChild(tdNode);
+                }
+                // 最後に削除、編集ボタンを追加
+                var removeButton = document.createElement("input");
+                removeButton.setAttribute("type", "button");
+                removeButton.setAttribute("value", "削除");
+                removeButton.setAttribute("onclick", "removeElement(this)");
+                trNode.appendChild(removeButton);
+            }
+            var getPriority = function(val){
+                var priority = null;
+                switch(val){
+                    case "1":
+                    priority = "高";
+                    break;
+                    case "2":
+                    priority = "中";
+                    break;
+                    case "3":
+                    priority = "低";
+                    break;
+                    default:
+                    priority = "そんなあたいねーよ！";
+                    break;
+                }
+                return priority;
+            }
+            var removeElement = function(dom){
+                var element = dom;
+                var deleteNode = document.getElementById(element.parentNode.id);
+                deleteNode.remove();
+            }
+        </script>
+        <table>
+            <thead>
+            <tr>
+                <th>日時</th>
+                <th>優先度</th>
+                <th>期限</th>
+                <th>作業内容</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr>
+                <form name="todo">
+                    <!-- //日時 -->
+                    <td><input type="text" name="datetime"></td>
+                    <!-- //優先度 -->
+                    <td>
+                        <select name="priority">
+                            <option value="1">高</option>
+                            <option value="2">中</option>
+                            <option value="3">低</option>
+                        </select>
+                    </td>
+                    <!-- //期限 -->
+                    <td><input type="text" name="limit"></td>
+                    <!-- //作業内容 -->
+                    <td><input type="text" name="detail"></td>
+                    <td><input type="button" value="リストに追加" onclick="addList()"></td>
+                </form>
+            </tr>
+            <tr></tr>
+            <tr>
+                <th>日時</th>
+                <th>優先度</th>
+                <th>期限</th>
+                <th>作業内容</th>
+                <th></th>
+            </tr>
+            <tbody id="result"></tbody>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>リアルタイムで日付表示</title>
+    </head>
+    <body>
+        <script>
+            function myFunc(){
+                myTbl = new Array("日","月","火","水","木","金","土")
+                myD = new Date();
+
+                myYear = myD.getFullYear();
+                myMonth = myD.getMonth() + 1;
+                myDate = myD.getDate();
+                myDay = myD.getDay();
+                myHours = myD.getHours();
+                myMinutes = myD.getMinutes();
+                mySeconds = myD.getSeconds();
+
+                myMess1 = myYear + "年" + myMonth + "月" + myDate + "日" +myTbl[myDay] + "曜日";
+                myMess2 = myHours + "時" + myMinutes + "分" + mySeconds + "秒";
+                document.myForm.myDate.value = myMess1;
+                document.myForm.myTime.value = myMess2;;
+            }
+        </script>
+
+        <form name="myForm">
+            ただいま、<br/>
+            <input type="text" size="28" name="myDate"><br/>
+            <input type="text" size="28" name="myTime">
+        </form>
+        <script>
+            setInterval("myFunc()", 1000);
+        </script>
+    </body>
+</html>

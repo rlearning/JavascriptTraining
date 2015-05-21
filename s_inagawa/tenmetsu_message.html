@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>点滅メッセージ</title>
+    </head>
+    <body>
+        <script>
+            var tenmetu = function(element){
+                console.log(element.value);
+                if(!element.value){
+                    element.value = "いらっしゃいませ";
+                    console.log("value is exist");
+                } else {
+                    element.value = '';
+                    console.log("value is null");
+                }
+            };
+        </script>
+        <form name="myForm">
+            <input type="text" size="20" name="myFormMes">
+        </form>
+        <script>
+            setInterval("tenmetu(document.myForm.myFormMes)", 500);
+        </script>
+    </body>
+</html>

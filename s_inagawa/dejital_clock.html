@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ストップウォッチその２</title>
+        <STYLE type="text/css">
+            <!--
+            /*--------------------------------------------------
+              Initialize Browser's Default Style
+            --------------------------------------------------*/
+            *{
+                margin: 0;
+                padding: 0;
+                color: #333;
+                font-family: "Meiryo UI", "メイリオ", Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS UI Gothic", Verdana, Arial, sans-serif;
+            }
+            /*--------------------------------------------------
+              Define Main Selectors
+            --------------------------------------------------*/
+            body {
+                margin: 0;
+                background-color: #ffffff;
+                text-align: left;
+            }
+
+            h1 {
+                margin: 20px 10px 10px 10px;
+                padding: 3px 5px 3px 7px;
+                padding: 8px 5px 8px 15px;
+                border-top: 2px solid #10688a;
+                border-bottom: 1px solid #10688a;
+                background: url(bg-mainCaption.png) no-repeat;
+                color: #10688a;
+                line-height: 130%;
+                font-size: 130%;
+                text-shadow: 0px 1px 1px #10688a;
+            }
+
+            h2 {
+                margin: 15px 10px 10px 15px;
+                padding: 4px 5px;
+                border-top: 1px solid #ebebeb;
+                border-left: 5px solid #ed9f49;
+                border-right: 1px solid #ebebeb;
+                border-bottom: 1px solid #ebebeb;
+                background-image: url(slash.png) !important;
+                background-image: url(slash_ie6.png);
+                line-height: 130%;
+                font-size: 110%;
+                text-shadow: 1px 1px 1px gray;
+            }
+
+            p {
+                margin: 0 15px 10px 25px;
+                padding: 0;
+                font-size: 100%;
+                line-height: 130%;
+                text-align: left;
+            }
+
+            ul {
+                list-style-type: none;
+                margin: 0 10px 10px 40px;
+                line-height: 130%;
+            }
+
+            ul li {
+                padding: 0 0 0 17px;
+                background: url(list-icon.png) no-repeat left 3px;
+            }
+
+            ul li ul, ol li ol {
+                margin: 0 0 5px 3px;
+            }
+
+            .center {
+                text-align: center;
+            }
+
+
+            /*--------------------------------------------------
+            Form Elements
+            --------------------------------------------------*/
+
+            input, textarea {
+                padding: 2px 5px;
+                font-size: 100%;
+            }
+
+            #taskDisplay {
+                width: 320px;
+            }
+
+            #timeDisplay {
+                width: 200px;
+                text-align: center;
+                font-size: 120%;
+            }
+
+            #lapDisplay {
+                width: 430px;
+                height: 200px;
+            }
+
+            #taskDisplay,
+            #timeDisplay,
+            #lapDisplay {
+                border: 2px solid #ccc;
+                background: url(form-bg-shadow.png) repeat-x;
+            }
+
+            #taskDisplay:focus,
+            #timeDisplay:focus,
+            #lapDisplay:focus {
+                border: 2px solid #edb475;
+            }
+
+            #buttonStartStop,
+            #buttonResetLap,
+            #buttonLapClear {
+                height: 30px;
+            }
+
+            #buttonStartStop,
+            #buttonResetLap {
+                width: 100px;
+            }
+
+
+            /*--------------------------------------------------
+            Others
+            --------------------------------------------------*/
+
+            div#wrapper {
+                margin: 0 auto;
+                width: 500px;
+            }
+            -->
+        </STYLE>
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1>javascriptによるストップウォッチ</h1>
+            <ul>
+                <li>スタート時刻と現在時刻の差分から経過時間を算出します</li>
+                <li>
+                  ラップを記録することができます
+                  <ul>
+                      <li>タスク名を記入すれば、記録日時とタスク名、そして経過時間を記録します</li>
+                  </ul>
+                </li>
+            </ul>
+            <form action="#" name="formStopWatch" id="formStopWatch">
+                <h2>タスク名<input type="text" name="taskDisplay" id="taskDisplay"/></h2>
+                  <p class="center"><input type="text" value="00:00'00^00" name="timeDisplay" id="timeDisplay"></p>
+                  <p class="center">
+                    <input type="button" value="スタート" name="buttonStartStop" id="buttonStartStop" onclick="return startOrStop()"/>
+                    <input type="button" value="リセット" name="buttonResetLap" id="buttonResetLap" onclick="return resetOrLap()"/>
+                  </p>
+                  <h2>Lap 履歴</h2>
+                    <p><textarea name="lapDisplay" id="lapDisplay" rows="10" cols="40"></textarea></p>
+                    <p><input type="button" value="ラップをクリア" name="buttonLapClear" id="buttonLapClear" onclick="return lapClear()" /></p>
+            </form>
+        </div>
+
+        <script type="text/javascript">
+            /*
+             * ストップウォッチ機能
+             * スタート時刻と現在時刻の差分から経過時間を算出する
+             * ラップを記録することが可能
+             * タスク名を記入すれば記録日時とタスク名、そして経過時間を記録する
+             */
+
+            //グローバル変数を宣言
+            var fsw = document.formStopWatch; //ストップウォッチ用フォーム
+            var tbTime = fsw.timeDisplay; //経過時間のテキストボックス
+            var tbLap = fsw.lapDisplay; //ラップを記録するテキストボックス
+            var myTime; //時間の差分をとるための変数
+            var myChk = 0; //スタート/ストップのチェック用変数
+
+            //経過時間をカウント
+            function count(){
+                //現在時刻を記録
+                var nowDate = new Date();
+                var nowH = nowDate.getHours(); //時
+                var nowM = nowDate.getMinutes(); //分
+                var nowS = nowDate.getSeconds(); //秒
+                var nowT = Math.floor(nowDate.getMilliseconds()/ 10); //10ミリ秒
+                var nowTime = nowH * 60 * 60 * 100
+                    + nowM * 60 * 100
+                    + nowS * 100
+                    + nowT; //現在時刻総合
+                //現在時刻から、スタート時刻を引く
+                var diffTime = nowTime - myTime;
+                var h = Math.floor(diffTime/(60 * 60 * 100)); //時
+                diffTime = diffTime - (h * 60 * 60 * 100); //分取得のため変換
+                var m = Math.floor(diffTime/(60 * 100)); //分
+                diffTime = diffTime - (m * 60 * 100); //秒取得のため変換
+                var s = Math.floor(diffTime/ 100); //秒
+                var t = diffTime % 100; //10ミリ秒
+                //経過時間を数値から文字列に変換して再セット
+                var hs = String(h); //時
+                var ms = String(m); //分
+                var ss = String(s); //秒
+                var ts = String(t); //10ミリ秒
+                //経過時間が1桁であれば10の位に "0" を加える
+                hs = (h < 10) ? "0" + hs : hs; //時
+                ms = (m < 10) ? "0" + ms : ms; //分
+                ss = (s < 10) ? "0" + ss : ss; //秒
+                ts = (t < 10) ? "0" + ts : ts; //10ミリ秒
+                //経過時間を書き込む
+                tbTime.value = hs + ":" + ms + "'" + ss + "^" + ts;
+                document.title = hs + ":" + ms + "'" + ss + "- JavaScriptのお勉強でストップウォッチを作ってみた";
+            }
+
+            //時間計測を開始する/停止する
+            function startOrStop() {
+                //チェックが "0" ならば＝計測中でないならば
+                if (myChk === 0) {
+                    //テキストボックスより数値を取得
+                    var getH = tbTime.value.substr(0,2); //時
+                    var getM = tbTime.value.substr(3,2); //分
+                    var getS = tbTime.value.substr(6,2); //秒
+                    var getT = tbTime.value.substr(9,2); //10ミリ秒
+                    //経過時間がちゃんと "XX:XX'XX^XX" の形式になっているなら
+                    if (tbTime.value.substr(2,1)===":"&&
+                            tbTime.value.substr(5,1)==="'"&&
+                            tbTime.value.substr(8,1)==="^"&&
+                            !getH.match(/[^0-9]/g)&&
+                            !getM.match(/[^0-9]/g)&&
+                            !getS.match(/[^0-9]/g)&&
+                            !getT.match(/[^0-9]/g)) {
+                        //ボタンの表示を変更してチェックを "1" にする
+                        fsw.buttonStartStop.value = "ストップ";
+                        fsw.buttonResetLap.value = "ラップ";
+                        myChk = 1;
+                        //スタート時刻を記録
+                        var startDate = new Date();
+                        var startH = startDate.getHours(); //時
+                        var startM = startDate.getMinutes(); //分
+                        var startS = startDate.getSeconds(); //秒
+                        var startT = Math.floor(startDate.getMilliseconds()/ 10); //10ミリ秒
+                        var startTime = - startH * 60 * 60 * 100
+                            + startM * 60 * 100
+                            + startS * 100
+                            + startT; //スタート時刻総合
+                        //経過時間を文字列から数値に変換してスタート時刻から引く
+                        var getTime = parseFloat(getH) * 60 * 60 * 100
+                            + parseFloat(getM) * 60 * 100
+                            + parseFloat(getS) * 100
+                            + parseFloat(getT); //テキストボックスの数値総合
+                        myTime = startTime - getTime;
+                        //カウント開始（10ミリ秒ごと）
+                        timer = setInterval("count()", 10);
+                    //経過時間の形式が間違っていれば
+                    } else {
+                        window.alert("時間が不正です。\"XX:XX'XX^XX\" の形式にしてください。");
+                    }
+                //チェックが "1" ならば＝計測中ならば
+                } else {
+                    //ボタンの表示を変更してチェックを "0" にする
+                    fsw.buttonStartStop.value = "スタート";
+                    fsw.buttonResetLap.value = "ラップ";
+                    myChk = 0;
+                    //カウント停止
+                    clearInterval(timer);
+                }
+            }
+
+            //経過時間をリセットする/ラップを記録する
+            function resetOrLap(){
+                //チェックが "0" ならば＝計測中でないならば
+                if (myChk === 0) {
+                    //経過時間をリセット
+                    tbTime.value = "00:00'00^00";
+                    document.title = "JavaScriptのお勉強でストップウォッチを作ってみた";
+                //チェックが "1" ならば＝計測中ならば
+                } else {
+                    //テキストボックスから経過時間とタスク名を取得
+                    var lapTime = tbTime.value + "\n"; //時間
+                    var taskName = "「" + fsw.taskDisplay.value + "」"; //タスク名
+                    //タスク名が空欄なら "タスクなし" にする
+                    if (taskName ==="「」") {
+                        taskName = "「タスクなし」";
+                    }
+                    //日付と時刻を取得
+                    var myDate = new Date();
+                    var myYear = myDate.getYear();
+                    myYear = (myYear < 2000) ? myYear + 1900 : myYear;
+                    var myMonth = myDate.getMonth() + 1;
+                    myMonth = (myMonth < 10) ? "0" + myMonth : myMonth;
+                    var myDay = myDate.getDate();
+                    myDay = (myDay < 10) ? "0" + myDay : myDay;
+                    var myH = myDate.getHours();
+                    myH = (myH < 10) ? "0" + myH : myH;
+                    var myM = myDate.getMinutes();
+                    myM = (myM < 10) ? "0" + myM : myM;
+                    var myS = myDate.getSeconds();
+                    myS = (myS < 10) ? "0" + myS : myS;
+                    myDate = myYear + "/" + myMonth + "/" + myDay + " " + myH + ":" + myM + "'" + myS + " ";
+                    //ラップ記録欄が空白ならそのまま記録
+                    if (tbLap.value === "") {
+                        tbLap.value = myDate + taskName + lapTime;
+                    //すでにラップが記録されているならその下に追記
+                    } else {
+                        tbLap.value = tbLap.value + myDate + taskName + lapTime;
+                    }
+                }
+            }
+
+            //ラップを消去する
+            function lapClear(){
+                tbLap.value = "";
+            }
+        </script>
+    </body>
+</html>

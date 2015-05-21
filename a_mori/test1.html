@@ -1,0 +1,43 @@
+<html>
+
+    <head>
+        <title>"JavascriptTest"</title>>
+    </head>
+
+    <body>
+        <script type="text/javascript"><!--
+
+            function myFunc(){
+                myTbl = new Array("日","月","火","水","木","金","土");
+                myD = new Date();
+
+                myYear = myD.getFullYear();
+                myMonth = myD.getMonth() + 1 ;
+                myDate = myD.getDate();
+                myDay = myD.getDay();
+                myHours = myD.getHours();
+                myMinutes = myD.getMinutes();
+                mySeconds = myD.getSeconds();
+
+                myMess1 = myYear + "年" + myMonth + "月" + myDate + "日";
+                myMess2 = myTbl[myDay] + "曜日";
+
+                document.myForm.myFormDate.value = myMess1;
+                document.myForm.myFormTime.value = myMess2;
+
+            }
+            // --></script>
+
+        <form name = "myForm">
+            いらっしゃいませ、ただいまは
+            <input type="text" size="28" name="myFormDate">
+            <input type="text" size="15" name="myFormTime">
+            です。
+        </form>
+        <script type = "text/javascript"><!--
+            setInterval("myFunc()", 1000);
+        --></script>
+
+    </body>
+
+ </html>

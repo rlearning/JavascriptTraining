@@ -1,0 +1,24 @@
+#guestbook_title {
+	text-align: center;
+}
+
+#guestbook_copy {
+	text-align: center;
+}
+
+.input_area {
+	margin: 5px;
+	margin-left: 10px;
+}
+
+.form_section {
+	margin: 20px;
+	padding-bottom: 20px;
+	border-bottom: #666666 1px solid;
+}
+
+.log_article {
+	margin: 20px;
+	padding-bottom: 20px;
+	border-bottom: #666666 1px solid;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>日付表示を関数化</title>
+    </head>
+    <body>
+        <script>
+            function myFunc(){
+                myTbl = new Array("日","月","火","水","木","金","土")
+                myD = new Date();
+
+                myYear = myD.getYear() + 1900;
+                myMonth = myD.getMonth() + 1;
+                myDate = myD.getDay();
+                myDay = myD.getDay();
+                myHour = myD.getHours();
+                myMinutes = myD.getMinutes();
+                mySeconds = myD.getSeconds();
+
+                myMess1 = myYear + "年" + myMonth + "月" + myDate + "日";
+                myMess2 = myTbl[myDay] + "曜日";
+                myMess3 = myHour + "時" + myMinutes + "分" + mySeconds + "秒";
+                myMess = myMess1 + myMess2 + myMess3;
+                document.write(myMess);
+            }
+        </script>
+        只今の時間は<br/>
+        <script>
+            myFunc();
+        </script><br/>
+        です。<br/>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>JavaScriptの練習</title>
+</head>
+<body>
+    <script>
+		var txta;
+		var txtb;
+        function Keisan(txta, txtb) {
+        	this.txta = txta;
+        	this.txtb = txtb;
+        }
+        
+        Keisan.prototype = {
+        	Tasizan : function() {
+	        	return (eval(this.txta) + eval(this.txtb));
+        	},
+        	Hikizan : function() {
+	        	return (eval(this.txta) - eval(this.txtb));
+        	},
+        	Warizan : function() {
+	        	return (eval(this.txta) / eval(this.txtb));
+        	},
+        	Kakezan : function() {
+	        	return (eval(this.txta) * eval(this.txtb));
+        	}
+        }
+
+    	function testTasizan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+	            
+    		var keisan = new Keisan(txta, txtb);
+    		document.js.txtanswer.value = keisan.Tasizan();
+    	}
+
+    	function testHikizan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+	            
+    		var keisan = new Keisan(txta, txtb);
+    		document.js.txtanswer.value = keisan.Hikizan();
+    	}
+        
+    	function testWarizan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+	            
+    		var keisan = new Keisan(txta, txtb);
+    		document.js.txtanswer.value = keisan.Warizan();
+    	}
+        
+    	function testKakezan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+	            
+    		var keisan = new Keisan(txta, txtb);
+    		document.js.txtanswer.value = keisan.Kakezan();
+    	}
+        
+    </script>
+    <form name="js">
+        値1：<input type="text" name="txta" value=""><br>
+        値2：<input type="text" name="txtb" value=""><br><br>
+        結果値：<input type="text" name="txtanswer" value=""><br>
+        <input type="button" onclick="testTasizan()" value="加算"><br>
+        <input type="button" onclick="testHikizan()" value="減算"><br>
+        <input type="button" onclick="testKakezan()" value="乗算"><br>
+        <input type="button" onclick="testWarizan()" value="除算"><br>
+    </form>
+</body>
+</html>

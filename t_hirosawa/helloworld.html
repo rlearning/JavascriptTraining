@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>JavaScriptの練習</title>
+</head>
+<body>
+    <script>
+        function tasizan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+            
+            document.js.txtanswer.value = eval(txta) + eval(txtb);
+            
+            return;
+        }
+        
+        function hikizan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+            
+            document.js.txtanswer.value = eval(txta) - eval(txtb);
+            
+            return;
+        }
+        
+        function warizan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+            
+            document.js.txtanswer.value = eval(txta) / eval(txtb);
+            
+            return;
+        }
+        
+        function kakezan() {
+            var txta = document.js.txta.value;
+            var txtb = document.js.txtb.value;
+            
+            document.js.txtanswer.value = eval(txta) * eval(txtb);
+            
+            return;
+        }
+        
+    </script>
+    <form name="js">
+        値1：<input type="text" name="txta" value=""><br>
+        値2：<input type="text" name="txtb" value=""><br><br>
+        結果値：<input type="text" name="txtanswer" value=""><br>
+        <input type="button" onclick="tasizan()" value="加算"><br>
+        <input type="button" onclick="hikizan()" value="減算"><br>
+        <input type="button" onclick="kakezan()" value="乗算"><br>
+        <input type="button" onclick="warizan()" value="除算"><br>
+    </form>
+</body>
+</html>

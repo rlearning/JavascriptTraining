@@ -1,0 +1,33 @@
+<!DOCTYPE=html>
+<html>
+		<head>
+				<meta charset="utf-8">
+				<title>掲示板</title>
+		</head>
+		<body>
+				<form id="input_data">
+						<div id="label_name">名前：<input type="text" name="NAME" id="id_name"></div>
+						<div id="label_mess">メッセージ：<input type="text" name="MESSAGE" id="id_message"></div>
+						<input type="button" value="送信" onclick="send()">
+				</form>
+				<hr>
+				<div id="output_data"></div>
+				<script>
+						function convertSendMessage(name, message){
+								var send_message = "";
+								
+								send_message = "<div>" + name + "：" + message + "</div>";
+								return send_message;
+						}
+						function send(){
+								var name = document.forms.input_data.id_name.value;
+								var message = document.forms.input_data.id_message.value;
+								var p = document.createElement("p");
+								var output_data = document.getElementById("output_data");
+								p.innerHTML = convertSendMessage("名前", name) + convertSendMessage("メッセージ", message) + "<hr>";
+								output_data.appendChild(p);
+						}
+				</script>
+		</body>
+</html>
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>掲示板</title>
+		<meta name="description" content="">
+		<meta name="author" content="クラウザー2世">
+
+		<link rel="stylesheet" href="css/common.css"/>
+		<link rel="stylesheet" href="css/guestbook.css"/>
+		<script src="./js/insert.js"></script>
+		<script src="./js/select.js"></script>
+		<script src="./js/common.js"></script>
+		<script src="./js/check.js"></script>
+		<script src="./js/send.js"></script>
+		<script src="./js/delete.js"></script>
+		
+	</head>
+
+	<body onload="select()">
+		<div>
+			<header>
+				<h1 id="guestbook_title">掲示板</h1>
+			</header>
+			<nav></nav>
+			<div>
+				<section class="form_section">
+					<article>
+						<form id="guestbook_form">
+							<div id="input_name_area" class="input_area">
+								<span class="input_label">おなまえ</span><span>
+									<input type="text" name="name" size="28" value="" id="input_name" />
+								</span>
+							</div>
+							<div id="input_email_area" class="input_area">
+								<span class="input_label">Ｅメール</span><span>
+									<input type="text" name="mail" size="28" value="" id="input_email" />
+								</span>
+							</div>
+							<div id="input_title_area" class="input_area">
+								<span class="input_label">タイトル</span>
+								<span>
+									<input type="text" name="title" size="36" value="" id="input_title" />
+									<input type="button" value="送信する" onclick="send();">
+									<input type="reset" value="リセット">
+								</span>
+							</div>
+							<div id="input_message_area" class="input_area">
+								<div>
+									メッセージ
+								</div>
+								<div>
+									<textarea name="message" cols="56" rows="7" id="input_message"></textarea>
+								</div>
+							</div>
+							<div id="input_url_area" class="input_area">
+								<span class="input_label">参照先</span><span>
+									<input type="text" name="url" size="50" value="http://" id="input_url" />
+								</span>
+							</div>
+							<div id="input_deletekey_area" class="input_area">
+								<span class="input_label">削除キー</span><span>
+									<input type="password" name="deletekey" size="8" maxlength="8" value="" id="input_deletekey" />
+									(英数字で8文字以内) &nbsp; </span>
+							</div>
+						</form>
+					</article>
+				</section>
+			</div>
+			<div>
+				<section class="log_section" id="log_section">
+				</section>
+			</div>
+
+			<footer>
+				<p id="guestbook_copy">
+					&copy; Copyright  by poropi
+				</p
+			</footer>
+		</div>
+	</body>
+</html>

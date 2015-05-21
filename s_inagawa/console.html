@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>初めてのjavascript</title>
+    </head>
+    <body>
+        <script>
+            console.log("hello world!");
+        </script>
+    </body>
+    ただの文字列連結
+    <form name="js">
+        <input type="text" name="text1" value="">
+        <input type="button" value="アラート表示" onclick="tbox1()">
+        <input type="button" value="削除" onclick="clr()">
+    </form>
+    <script>
+        // テキストボックスの文字を取得する
+        function tbox1() {
+            var str = document.js.text1.value;
+            alert("こんにちは" + str + "さん");
+        }
+        // テキストボックスの中身を空にする
+        function clr() {
+            document.js.text1.value = "";
+        }
+    </script>
+    数字の連結
+    <form name="js2">
+        <input type="text" name="text2" value="">
+        <input type="text" name="text3" value="">
+        <input type="button" value="たす" onclick="add()">
+        <input type="button" value="消す" onclick="clr2()">
+    </form>
+    <script>
+        function add() {
+            var val = document.js2.text2.value;
+            var val2 = document.js2.text3.value;
+            alert(eval(val) + eval(val2));
+        }
+        function clr2() {
+            document.js2.text2.value = "";
+            document.js2.text3.value = "";
+        }
+    </script>
+</html>

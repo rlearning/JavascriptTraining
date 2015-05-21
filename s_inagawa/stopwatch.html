@@ -1,0 +1,37 @@
+<!DOCTYPE=html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>ストップウォッチその１</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var stopWatch = function(){
+                if (document.myForm.myFormButton.value == "Start"){  // Startボタンを押した
+                    myStart = new Date();                            // スタート時間を退避
+                    document.myForm.myFormButton.value = "Stop!";
+                    myInterval = setInterval("myDisp()", 1);
+                }else{                                               // Stopボタンを押した
+                    myDisp();
+                    document.myForm.myFormButton.value = "Start";
+                    clearInterval(myInterval);
+                }
+            }
+            var myDisp = function(){
+                var myStop = new Date();                             // 経過時間を退避
+                var myTime = myStop.getTime() - myStart.getTime();   // 通算ミリ秒計算
+                var myH = Math.floor(myTime/(60*60*1000));           // '時間'取得
+                var myTime = myTime - (myH*60*60*1000);
+                var myM = Math.floor(myTime/(60*1000));              // '分'取得
+                var myTime = myTime - (myM*60*1000);
+                var myS = Math.floor(myTime/1000);                   // '秒'取得
+                var myMS = myTime%1000;                              // 'ミリ秒'取得
+                document.myForm.myFormTime.value = myH + ":" + myM + ":" + myS + ":" + myMS;
+            }
+        </script>
+        <form name="myForm">
+            <input type="text" size="28" name="myFormTime">
+            <input type="button" value="Start" name="myFormButton" onclick="stopWatch()">
+        </form>
+    </body>
+</html>
